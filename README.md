@@ -6,7 +6,7 @@ Shared CMake aliases, macros and functions (WIP)
 1. Add this repository as a submodule of your project, in `./extlibs/vrm_cmake`:
 
     ```bash
-    git submodule add https://github.com/SuperV1234/vrm_cmake.git your_project/extlibs/vrm_cmake
+    git submodule add   https://github.com/SuperV1234/vrm_cmake.git   your_project/extlibs/vrm_cmake
     ```
 
 2. Include the repository in your project's CMakeLists:
