@@ -1,7 +1,7 @@
 # vrm_cmake
 Shared CMake aliases, macros and functions (WIP)
 
-## Intended usage
+## Intended usage (quick start)
 
 1. Add this repository as a submodule of your project, in `./extlibs/vrm_cmake`:
 
