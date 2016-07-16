@@ -13,17 +13,11 @@ macro(vrm_cmake_find_extlib_in extlib dir)
 #{
     vrm_cmake_message("finding ${extlib} in ${dir}")
 
-    if(NOT VRM_CMAKE_APPENDED_MODULE_PATHS)
-    #{
-        set("${VRM_CMAKE_APPENDED_MODULE_PATHS}" true)
-
-        list(APPEND CMAKE_MODULE_PATH
-            "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/modules/"
-            "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/"
-            "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/modules/"
-            "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/")
-    #}
-    endif()
+    list(APPEND CMAKE_MODULE_PATH
+        "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/modules/"
+        "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/"
+        "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/modules/"
+        "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/")
 
     find_package("${extlib}" REQUIRED)
     string(TOUPPER "${extlib}" ${extlib}_UPPER)
