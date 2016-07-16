@@ -72,7 +72,7 @@ macro(vrm_cmake_add_compiler_flag_dispatch flag)
 endmacro()
 
 
-# TODO:
+# Adds `-Weverything` and disables annoying warnings.
 macro(vrm_cmake_add_common_compiler_flags_clang)
 #{
     vrm_cmake_add_compiler_flag_nocheck("-Weverything")
@@ -103,7 +103,7 @@ macro(vrm_cmake_add_common_compiler_flags_clang)
 #}
 endmacro()
 
-# TODO:
+# Adds gcc-specific warnings.
 macro(vrm_cmake_add_common_compiler_flags_gcc)
 #{
     vrm_cmake_add_compiler_flag_dispatch("-Wmisleading-indentation")
@@ -144,7 +144,7 @@ macro(vrm_cmake_add_common_compiler_flags_any)
 #}
 endmacro()
 
-# TODO:
+# Adds attribute suggestion flags.
 macro(vrm_cmake_add_common_compiler_flags_suggest_attribute)
 #{
     vrm_cmake_message("added common suggest-attribute flags")
@@ -195,9 +195,6 @@ endmacro()
 macro(vrm_cmake_add_common_compiler_flags_debug)
 #{
     vrm_cmake_message("added common debug flags")
-
-    # TODO:
-    # vrm_cmake_add_compiler_flag("-fno-omit-frame-pointer")
 
     vrm_cmake_add_compiler_flag_nocheck("-Og")
     vrm_cmake_add_compiler_flag_nocheck("-g")

@@ -7,23 +7,30 @@
 include("${CMAKE_CURRENT_LIST_DIR}/vc_include.cmake")
 vrm_cmake_include_vc_dependency_once(vc_log)
 
-# TODO:
+# Looks for library folder `extlib` in paths starting with `extlibs`
+# or `dir`.
 macro(vrm_cmake_find_extlib_in extlib dir)
 #{
     vrm_cmake_message("finding ${extlib} in ${dir}")
 
-    list(APPEND CMAKE_MODULE_PATH
-        "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/modules/"
-        "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/"
-        "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/modules/"
-        "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/")
+    if(NOT VRM_CMAKE_APPENDED_MODULE_PATHS)
+    #{
+        set("${VRM_CMAKE_APPENDED_MODULE_PATHS}" true)
+
+        list(APPEND CMAKE_MODULE_PATH
+            "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/modules/"
+            "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/"
+            "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/modules/"
+            "${CMAKE_SOURCE_DIR}/extlibs/${extlib}/cmake/")
+    #}
+    endif()
 
     find_package("${extlib}" REQUIRED)
     string(TOUPPER "${extlib}" ${extlib}_UPPER)
 #}
 endmacro()
 
-# TODO:
+# Looks for `extlib` in `dir` and includes it.
 macro(vrm_cmake_find_extlib_in_and_default_include extlib dir)
 #{
     vrm_cmake_find_extlib_in(${extlib} ${dir})
@@ -31,7 +38,7 @@ macro(vrm_cmake_find_extlib_in_and_default_include extlib dir)
 #}
 endmacro()
 
-# TODO:
+# Looks for `extlib` in the source folder and includes it.
 macro(vrm_cmake_find_extlib extlib)
 #{
     vrm_cmake_message("finding ${extlib} in ./..")
