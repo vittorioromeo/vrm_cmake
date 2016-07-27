@@ -60,18 +60,6 @@ macro(vrm_cmake_add_compiler_flag flag)
 #}
 endmacro()
 
-# TODO:
-macro(vrm_cmake_add_compiler_flag_dispatch flag)
-#{
-    if(true)
-    #{
-        vrm_cmake_add_compiler_flag_nocheck(${flag})
-    #}
-    endif()
-#}
-endmacro()
-
-
 # Adds `-Weverything` and disables annoying warnings.
 macro(vrm_cmake_add_common_compiler_flags_clang)
 #{
@@ -106,11 +94,11 @@ endmacro()
 # Adds gcc-specific warnings.
 macro(vrm_cmake_add_common_compiler_flags_gcc)
 #{
-    vrm_cmake_add_compiler_flag_dispatch("-Wmisleading-indentation")
-    vrm_cmake_add_compiler_flag_dispatch("-Wtautological-compare")
-    vrm_cmake_add_compiler_flag_dispatch("-Wlogical-op")
-    vrm_cmake_add_compiler_flag_dispatch("-Wshift-overflow=2")
-    vrm_cmake_add_compiler_flag_dispatch("-Wduplicated-cond")
+    vrm_cmake_add_compiler_flag_nocheck("-Wmisleading-indentation")
+    vrm_cmake_add_compiler_flag_nocheck("-Wtautological-compare")
+    vrm_cmake_add_compiler_flag_nocheck("-Wlogical-op")
+    vrm_cmake_add_compiler_flag_nocheck("-Wshift-overflow=2")
+    vrm_cmake_add_compiler_flag_nocheck("-Wduplicated-cond")
 
     vrm_cmake_add_compiler_flag_nocheck("-Wsuggest-final-types")
     vrm_cmake_add_compiler_flag_nocheck("-Wsuggest-final-methods")
@@ -128,19 +116,19 @@ macro(vrm_cmake_add_common_compiler_flags_any)
     vrm_cmake_add_compiler_flag_nocheck("-Wextra")
     vrm_cmake_add_compiler_flag_nocheck("-pedantic")
 
-    vrm_cmake_add_compiler_flag_dispatch("-Wwrite-strings")
-    vrm_cmake_add_compiler_flag_dispatch("-Wundef")
-    vrm_cmake_add_compiler_flag_dispatch("-Wpointer-arith")
-    vrm_cmake_add_compiler_flag_dispatch("-Wcast-align")
-    vrm_cmake_add_compiler_flag_dispatch("-Wnon-virtual-dtor")
-    vrm_cmake_add_compiler_flag_dispatch("-Woverloaded-virtual")
-    vrm_cmake_add_compiler_flag_dispatch("-Wsequence-point")
-    vrm_cmake_add_compiler_flag_dispatch("-Wnull-dereference")
-    vrm_cmake_add_compiler_flag_dispatch("-Wshift-negative-value")
+    vrm_cmake_add_compiler_flag_nocheck("-Wwrite-strings")
+    vrm_cmake_add_compiler_flag_nocheck("-Wundef")
+    vrm_cmake_add_compiler_flag_nocheck("-Wpointer-arith")
+    vrm_cmake_add_compiler_flag_nocheck("-Wcast-align")
+    vrm_cmake_add_compiler_flag_nocheck("-Wnon-virtual-dtor")
+    vrm_cmake_add_compiler_flag_nocheck("-Woverloaded-virtual")
+    vrm_cmake_add_compiler_flag_nocheck("-Wsequence-point")
+    vrm_cmake_add_compiler_flag_nocheck("-Wnull-dereference")
+    vrm_cmake_add_compiler_flag_nocheck("-Wshift-negative-value")
 
-    vrm_cmake_add_compiler_flag_dispatch("-Wno-unused-local-typedefs")
-    vrm_cmake_add_compiler_flag_dispatch("-Wno-missing-field-initializers")
-    vrm_cmake_add_compiler_flag_dispatch("-Wno-unreachable-code")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-local-typedefs")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-missing-field-initializers")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-unreachable-code")
 #}
 endmacro()
 
