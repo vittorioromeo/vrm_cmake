@@ -14,8 +14,8 @@ macro(vrm_cmake_header_only_install file_list src_dir dest_dir)
 #{
     vrm_cmake_message("added header-only install target")
 
-    set_source_files_properties(${file_list} PROPERTIES HEADER_FILE_ONLY 1)
-    add_library(HEADER_ONLY_TARGET STATIC ${file_list})
+    # set_source_files_properties(${file_list} PROPERTIES HEADER_FILE_ONLY 1)
+    add_custom_target(HEADER_ONLY_TARGET SOURCES ${file_list})
     set_target_properties(HEADER_ONLY_TARGET PROPERTIES LINKER_LANGUAGE CXX)
     install(DIRECTORY ${src_dir} DESTINATION ${dest_dir})
 #}
