@@ -32,7 +32,7 @@ endmacro()
 macro(vrm_cmake_add_compiler_flag_nocheck flag)
 #{
     add_compile_options(${flag})
-    list(APPEND VRM_CORE_SET_FLAGS "${flag}")
+    list(APPEND VRM_CMAKE_SET_FLAGS "${flag}")
 #}
 endmacro()
 
@@ -234,6 +234,6 @@ macro(vrm_cmake_add_common_compiler_flags)
     #}
     endif()
 
-    vrm_cmake_message("final flags: ${VRM_CORE_SET_FLAGS}")
+    vrm_cmake_message("final flags: ${VRM_CMAKE_SET_FLAGS}")
 #}
 endmacro()
