@@ -168,3 +168,53 @@ macro(vrm_cmake_generate_public_header_tests_glob glob_pattern inc_dir)
     vrm_cmake_generate_public_header_tests(_pub_headers "${inc_dir}")
 #}
 endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test test suffix)
+#{
+    set(augmented_test "${test}_${suffix}")
+    get_target_property(original_sources ${test} SOURCES)
+
+    add_executable("${augmented_test}" EXCLUDE_FROM_ALL ${original_sources})
+    vrm_cmake_add_unit_test("${augmented_test}" ${CMAKE_CURRENT_BINARY_DIR}/${augmented_test})
+    target_compile_options("${augmented_test}" PUBLIC ${ARGN})
+
+    set(vrm_cmake_out ${augmented_test})
+#}
+endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test_sanitizer test fname lname)
+#{
+    vrm_cmake_augment_test(${test} ${lname} "-fdiagnostics-color=always" "-fsanitize=${fname}")
+    target_link_libraries("${vrm_cmake_out}" "-l${lname}")  
+#}
+endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test_ofast test)
+#{
+    vrm_cmake_augment_test(${test} ofast "-Ofast")  
+#}
+endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test_asan test)
+#{
+    vrm_cmake_augment_test_sanitizer(${test} "address" "asan")
+#}
+endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test_tsan test)
+#{
+    vrm_cmake_augment_test_sanitizer(${test} "thread" "tsan")
+#}
+endmacro()
+
+# TODO: docs
+macro(vrm_cmake_augment_test_ubsan test)
+#{
+    vrm_cmake_augment_test_sanitizer(${test} "undefined" "ubsan")
+#}
+endmacro()
