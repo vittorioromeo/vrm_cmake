@@ -39,5 +39,24 @@ macro(vrm_cmake_check_clang flag)
 #}
 endmacro()
 
+
+# Sets `flag` to `true` if the compiler is msvc.
+macro(vrm_cmake_check_msvc flag)
+#{
+    if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    #{
+        vrm_cmake_message("detected MSVC, setting ${flag} to `true`")
+        set(${flag} true)
+    #}
+    else()
+    #{
+        set(${flag} false)
+    #}
+    endif()
+#}
+endmacro()
+
+
 vrm_cmake_check_gcc(VRM_CMAKE_COMPILER_IS_GCC)
 vrm_cmake_check_clang(VRM_CMAKE_COMPILER_IS_CLANG)
+vrm_cmake_check_msvc(VRM_CMAKE_COMPILER_IS_MSVC)

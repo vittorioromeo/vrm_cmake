@@ -88,6 +88,9 @@ macro(vrm_cmake_add_common_compiler_flags_clang)
     vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-member-function")
     vrm_cmake_add_compiler_flag_nocheck("-Wno-switch-enum")
     vrm_cmake_add_compiler_flag_nocheck("-Wno-double-promotion")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-injected-class-name")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-gnu-statement-expression")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-lambda-capture")
 #}
 endmacro()
 
@@ -192,45 +195,49 @@ endmacro()
 # Adds common compiler flags/definitions, depending on the build type.
 macro(vrm_cmake_add_common_compiler_flags)
 #{
-    vrm_cmake_add_common_compiler_flags_any()
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_common_compiler_flags_any()
 
-    if("${VRM_CMAKE_COMPILER_IS_GCC}")
-    #{
-        vrm_cmake_add_common_compiler_flags_gcc()
-    #}
-    elseif("${VRM_CMAKE_COMPILER_IS_CLANG}")
-    #{
-        vrm_cmake_add_common_compiler_flags_clang()
-    #}
-    endif()
+        if("${VRM_CMAKE_COMPILER_IS_GCC}")
+        #{
+            vrm_cmake_add_common_compiler_flags_gcc()
+        #}
+        elseif("${VRM_CMAKE_COMPILER_IS_CLANG}")
+        #{
+            vrm_cmake_add_common_compiler_flags_clang()
+        #}
+        endif()
 
-    if("${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
-    #{
-        vrm_cmake_message("RELEASE mode")
-        vrm_cmake_add_common_compiler_flags_release()
-    #}
-    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
-    #{
-        vrm_cmake_message("DEBUG mode")
-        vrm_cmake_add_common_compiler_flags_debug()
-    #}
-    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP")
-    #{
-        vrm_cmake_message("WIP mode")
-    #}
-    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_OPT")
-    #{
-        vrm_cmake_message("WIP (optimized) mode")
-        vrm_cmake_add_common_compiler_flags_wip_opt()
-    #}
-    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_PROFILE")
-    #{
-        vrm_cmake_message("WIP (profile) mode")
-        vrm_cmake_add_common_compiler_flags_wip_profile()
-    #}
-    else()
-    #{
-        vrm_cmake_message("Unknown build mode")
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
+        #{
+            vrm_cmake_message("RELEASE mode")
+            vrm_cmake_add_common_compiler_flags_release()
+        #}
+        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
+        #{
+            vrm_cmake_message("DEBUG mode")
+            vrm_cmake_add_common_compiler_flags_debug()
+        #}
+        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP")
+        #{
+            vrm_cmake_message("WIP mode")
+        #}
+        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_OPT")
+        #{
+            vrm_cmake_message("WIP (optimized) mode")
+            vrm_cmake_add_common_compiler_flags_wip_opt()
+        #}
+        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_PROFILE")
+        #{
+            vrm_cmake_message("WIP (profile) mode")
+            vrm_cmake_add_common_compiler_flags_wip_profile()
+        #}
+        else()
+        #{
+            vrm_cmake_message("Unknown build mode")
+        #}
+        endif()
     #}
     endif()
 
