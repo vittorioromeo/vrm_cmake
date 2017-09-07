@@ -152,8 +152,11 @@ macro(vrm_cmake_add_common_compiler_flags_release)
 #{
     vrm_cmake_message("added common release flags")
 
-    vrm_cmake_add_compiler_flag_nocheck("-Ofast")
-    vrm_cmake_add_compiler_flag_nocheck("-ffast-math")
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-Ofast")
+        vrm_cmake_add_compiler_flag_nocheck("-ffast-math")
+    #}
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
 #}
@@ -175,8 +178,11 @@ macro(vrm_cmake_add_common_compiler_flags_wip_profile)
 #{
     vrm_cmake_message("added common WIP_PROFILE flags")
 
-    vrm_cmake_add_compiler_flag_nocheck("-O2")
-    vrm_cmake_add_compiler_flag_nocheck("-g")
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-O2")
+        vrm_cmake_add_compiler_flag_nocheck("-g")
+    #}
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
 #}
@@ -187,8 +193,11 @@ macro(vrm_cmake_add_common_compiler_flags_debug)
 #{
     vrm_cmake_message("added common debug flags")
 
-    vrm_cmake_add_compiler_flag_nocheck("-Og")
-    vrm_cmake_add_compiler_flag_nocheck("-g")
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-Og")
+        vrm_cmake_add_compiler_flag_nocheck("-g")
+    #}
 #}
 endmacro()
 
