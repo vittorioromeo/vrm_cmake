@@ -157,6 +157,7 @@ macro(vrm_cmake_add_common_compiler_flags_release)
         vrm_cmake_add_compiler_flag_nocheck("-Ofast")
         vrm_cmake_add_compiler_flag_nocheck("-ffast-math")
     #}
+    endif()
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
 #}
