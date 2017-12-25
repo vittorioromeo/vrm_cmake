@@ -11,7 +11,7 @@ vrm_cmake_include_vc_dependency_once(vc_log)
 # or `dir`.
 macro(vrm_cmake_find_extlib_in extlib dir)
 #{
-    vrm_cmake_message("finding ${extlib} in ${dir}")
+    vrm_cmake_message("finding ${extlib} in ${CMAKE_SOURCE_DIR}/${dir}/${extlib}")
 
     list(APPEND CMAKE_MODULE_PATH
         "${CMAKE_SOURCE_DIR}/${dir}/${extlib}/cmake/modules/"
