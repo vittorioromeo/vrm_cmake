@@ -187,14 +187,14 @@ endmacro()
 macro(vrm_cmake_augment_test_sanitizer test fname lname)
 #{
     vrm_cmake_augment_test(${test} ${lname} "-fdiagnostics-color=always" "-fsanitize=${fname}")
-    target_link_libraries("${vrm_cmake_out}" "-l${lname}")  
+    target_link_libraries("${vrm_cmake_out}" "-l${lname}")
 #}
 endmacro()
 
 # TODO: docs
 macro(vrm_cmake_augment_test_ofast test)
 #{
-    vrm_cmake_augment_test(${test} ofast "-Ofast")  
+    vrm_cmake_augment_test(${test} ofast "-Ofast")
 #}
 endmacro()
 

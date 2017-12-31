@@ -56,7 +56,6 @@ macro(vrm_cmake_check_msvc flag)
 #}
 endmacro()
 
-
 vrm_cmake_check_gcc(VRM_CMAKE_COMPILER_IS_GCC)
 vrm_cmake_check_clang(VRM_CMAKE_COMPILER_IS_CLANG)
 vrm_cmake_check_msvc(VRM_CMAKE_COMPILER_IS_MSVC)

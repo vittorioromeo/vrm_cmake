@@ -91,6 +91,7 @@ macro(vrm_cmake_add_common_compiler_flags_clang)
     vrm_cmake_add_compiler_flag_nocheck("-Wno-injected-class-name")
     vrm_cmake_add_compiler_flag_nocheck("-Wno-gnu-statement-expression")
     vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-lambda-capture")
+    vrm_cmake_add_compiler_flag_nocheck("-Wno-documentation-unknown-command")
 #}
 endmacro()
 
