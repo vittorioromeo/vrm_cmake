@@ -200,6 +200,7 @@ macro(vrm_cmake_add_common_compiler_flags_debug)
         vrm_cmake_add_compiler_flag_nocheck("-Og")
         vrm_cmake_add_compiler_flag_nocheck("-g")
     #}
+    endif()
 #}
 endmacro()
 
