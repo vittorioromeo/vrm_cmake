@@ -6,6 +6,6 @@
 # Message with "[vrm_cmake]" prefix.
 macro(vrm_cmake_message x)
 #{
-    message("[vrm_cmake] ${x}")
+    message(STATUS "[vrm_cmake] ${x}")
 #}
 endmacro()
