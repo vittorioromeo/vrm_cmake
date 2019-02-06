@@ -18,6 +18,7 @@ macro(vrm_cmake_header_only_install target_name file_list src_dir dest_dir)
     # all the source files to it.
     add_library(${target_name} INTERFACE)
     target_sources(${target_name} INTERFACE ${file_list})
+    target_include_directories(${target_name} INTERFACE ${src_dir})
 
     # In order to allow IDEs such as "Qt Creator" to correctly display the
     # files that compose the header-only library, a custom target needs
