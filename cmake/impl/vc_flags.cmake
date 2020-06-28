@@ -1,4 +1,4 @@
-# Copyright (c) 2015-2016 Vittorio Romeo
+# Copyright (c) 2015-2020 Vittorio Romeo
 # License: Academic Free License ("AFL") v. 3.0
 # AFL License page: http://opensource.org/licenses/AFL-3.0
 # http://vittorioromeo.info | vittorio.romeo@outlook.com
@@ -221,26 +221,28 @@ macro(vrm_cmake_add_common_compiler_flags)
         #}
         endif()
 
-        if("${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
+        string(TOLOWER "${CMAKE_BUILD_TYPE}" vrm_cmake_build_type_lower)
+
+        if("${vrm_cmake_build_type_lower}" STREQUAL "release")
         #{
             vrm_cmake_message("RELEASE mode")
             vrm_cmake_add_common_compiler_flags_release()
         #}
-        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
+        elseif("${vrm_cmake_build_type_lower}" STREQUAL "debug")
         #{
             vrm_cmake_message("DEBUG mode")
             vrm_cmake_add_common_compiler_flags_debug()
         #}
-        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP")
+        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip")
         #{
             vrm_cmake_message("WIP mode")
         #}
-        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_OPT")
+        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_opt")
         #{
             vrm_cmake_message("WIP (optimized) mode")
             vrm_cmake_add_common_compiler_flags_wip_opt()
         #}
-        elseif("${CMAKE_BUILD_TYPE}" STREQUAL "WIP_PROFILE")
+        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_profile")
         #{
             vrm_cmake_message("WIP (profile) mode")
             vrm_cmake_add_common_compiler_flags_wip_profile()
