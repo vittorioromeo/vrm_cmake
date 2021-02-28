@@ -185,6 +185,7 @@ macro(vrm_cmake_add_common_compiler_flags_wip_profile)
         vrm_cmake_add_compiler_flag_nocheck("-O2")
         vrm_cmake_add_compiler_flag_nocheck("-g")
     #}
+    endif()
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
 #}
