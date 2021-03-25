@@ -110,29 +110,40 @@ macro(vrm_cmake_add_common_compiler_flags_gcc)
 #}
 endmacro()
 
+# Adds MSVC-specific warnings.
+macro(vrm_cmake_add_common_compiler_flags_msvc)
+#{
+    vrm_cmake_add_compiler_flag_nocheck("/W4")
+#}
+endmacro()
+
 # Adds common compiler safety/warning flags/definitions to the project.
 macro(vrm_cmake_add_common_compiler_flags_any)
 #{
     vrm_cmake_message("adding common flags")
 
-    vrm_cmake_add_compiler_flag_nocheck("-W")
-    vrm_cmake_add_compiler_flag_nocheck("-Wall")
-    vrm_cmake_add_compiler_flag_nocheck("-Wextra")
-    vrm_cmake_add_compiler_flag_nocheck("-pedantic")
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-W")
+        vrm_cmake_add_compiler_flag_nocheck("-Wall")
+        vrm_cmake_add_compiler_flag_nocheck("-Wextra")
+        vrm_cmake_add_compiler_flag_nocheck("-pedantic")
 
-    vrm_cmake_add_compiler_flag_nocheck("-Wwrite-strings")
-    vrm_cmake_add_compiler_flag_nocheck("-Wundef")
-    vrm_cmake_add_compiler_flag_nocheck("-Wpointer-arith")
-    vrm_cmake_add_compiler_flag_nocheck("-Wcast-align")
-    vrm_cmake_add_compiler_flag_nocheck("-Wnon-virtual-dtor")
-    vrm_cmake_add_compiler_flag_nocheck("-Woverloaded-virtual")
-    vrm_cmake_add_compiler_flag_nocheck("-Wsequence-point")
-    vrm_cmake_add_compiler_flag("-Wnull-dereference")
-    vrm_cmake_add_compiler_flag("-Wshift-negative-value")
+        vrm_cmake_add_compiler_flag_nocheck("-Wwrite-strings")
+        vrm_cmake_add_compiler_flag_nocheck("-Wundef")
+        vrm_cmake_add_compiler_flag_nocheck("-Wpointer-arith")
+        vrm_cmake_add_compiler_flag_nocheck("-Wcast-align")
+        vrm_cmake_add_compiler_flag_nocheck("-Wnon-virtual-dtor")
+        vrm_cmake_add_compiler_flag_nocheck("-Woverloaded-virtual")
+        vrm_cmake_add_compiler_flag_nocheck("-Wsequence-point")
+        vrm_cmake_add_compiler_flag("-Wnull-dereference")
+        vrm_cmake_add_compiler_flag("-Wshift-negative-value")
 
-    vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-local-typedefs")
-    vrm_cmake_add_compiler_flag_nocheck("-Wno-missing-field-initializers")
-    vrm_cmake_add_compiler_flag_nocheck("-Wno-unreachable-code")
+        vrm_cmake_add_compiler_flag_nocheck("-Wno-unused-local-typedefs")
+        vrm_cmake_add_compiler_flag_nocheck("-Wno-missing-field-initializers")
+        vrm_cmake_add_compiler_flag_nocheck("-Wno-unreachable-code")
+    #}
+    endif()
 #}
 endmacro()
 
@@ -158,6 +169,10 @@ macro(vrm_cmake_add_common_compiler_flags_release)
         vrm_cmake_add_compiler_flag_nocheck("-Ofast")
         vrm_cmake_add_compiler_flag_nocheck("-ffast-math")
     #}
+    else()
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("/O2")
+    #}
     endif()
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
@@ -169,7 +184,11 @@ macro(vrm_cmake_add_common_compiler_flags_wip_opt)
 #{
     vrm_cmake_message("added common WIP_OPT flags")
 
-    vrm_cmake_add_compiler_flag_nocheck("-O2")
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-O2")
+    #}
+    endif()
 
     add_definitions(-DNDEBUG -DSSVU_ASSERT_FORCE_OFF=1 -DVRM_CORE_ASSERT_FORCE_OFF=1)
 #}
@@ -191,6 +210,23 @@ macro(vrm_cmake_add_common_compiler_flags_wip_profile)
 #}
 endmacro()
 
+# Adds common compiler debug info flags/definitions to the project.
+macro(vrm_cmake_add_common_compiler_flags_debuginfo)
+#{
+    vrm_cmake_message("added common debug flags")
+
+    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("-g")
+    #}
+    else()
+    #{
+        vrm_cmake_add_compiler_flag_nocheck("/DEBUG")
+    #}
+    endif()
+#}
+endmacro()
+
 # Adds common compiler debug flags/definitions to the project.
 macro(vrm_cmake_add_common_compiler_flags_debug)
 #{
@@ -199,7 +235,10 @@ macro(vrm_cmake_add_common_compiler_flags_debug)
     if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
     #{
         vrm_cmake_add_compiler_flag_nocheck("-Og")
-        vrm_cmake_add_compiler_flag_nocheck("-g")
+    #}
+    else()
+    #{
+        # TODO
     #}
     endif()
 #}
@@ -208,51 +247,58 @@ endmacro()
 # Adds common compiler flags/definitions, depending on the build type.
 macro(vrm_cmake_add_common_compiler_flags)
 #{
-    if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
+    vrm_cmake_add_common_compiler_flags_any()
+
+    if("${VRM_CMAKE_COMPILER_IS_GCC}")
     #{
-        vrm_cmake_add_common_compiler_flags_any()
+        vrm_cmake_add_common_compiler_flags_gcc()
+    #}
+    elseif("${VRM_CMAKE_COMPILER_IS_CLANG}")
+    #{
+        vrm_cmake_add_common_compiler_flags_clang()
+    #}
+    elseif("${VRM_CMAKE_COMPILER_IS_MSVC}")
+    #{
+        vrm_cmake_add_common_compiler_flags_msvc()
+    #}
+    endif()
 
-        if("${VRM_CMAKE_COMPILER_IS_GCC}")
-        #{
-            vrm_cmake_add_common_compiler_flags_gcc()
-        #}
-        elseif("${VRM_CMAKE_COMPILER_IS_CLANG}")
-        #{
-            vrm_cmake_add_common_compiler_flags_clang()
-        #}
-        endif()
+    string(TOLOWER "${CMAKE_BUILD_TYPE}" vrm_cmake_build_type_lower)
 
-        string(TOLOWER "${CMAKE_BUILD_TYPE}" vrm_cmake_build_type_lower)
-
-        if("${vrm_cmake_build_type_lower}" STREQUAL "release")
-        #{
-            vrm_cmake_message("RELEASE mode")
-            vrm_cmake_add_common_compiler_flags_release()
-        #}
-        elseif("${vrm_cmake_build_type_lower}" STREQUAL "debug")
-        #{
-            vrm_cmake_message("DEBUG mode")
-            vrm_cmake_add_common_compiler_flags_debug()
-        #}
-        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip")
-        #{
-            vrm_cmake_message("WIP mode")
-        #}
-        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_opt")
-        #{
-            vrm_cmake_message("WIP (optimized) mode")
-            vrm_cmake_add_common_compiler_flags_wip_opt()
-        #}
-        elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_profile")
-        #{
-            vrm_cmake_message("WIP (profile) mode")
-            vrm_cmake_add_common_compiler_flags_wip_profile()
-        #}
-        else()
-        #{
-            vrm_cmake_message("Unknown build mode")
-        #}
-        endif()
+    if("${vrm_cmake_build_type_lower}" STREQUAL "release")
+    #{
+        vrm_cmake_message("RELEASE mode")
+        vrm_cmake_add_common_compiler_flags_release()
+    #}
+    elseif("${vrm_cmake_build_type_lower}" STREQUAL "relwithdebinfo")
+    #{
+        vrm_cmake_message("RELEASE (with debug info) mode")
+        vrm_cmake_add_common_compiler_flags_debuginfo()
+        vrm_cmake_add_common_compiler_flags_release()
+    #}
+    elseif("${vrm_cmake_build_type_lower}" STREQUAL "debug")
+    #{
+        vrm_cmake_message("DEBUG mode")
+        vrm_cmake_add_common_compiler_flags_debuginfo()
+        vrm_cmake_add_common_compiler_flags_debug()
+    #}
+    elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip")
+    #{
+        vrm_cmake_message("WIP mode")
+    #}
+    elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_opt")
+    #{
+        vrm_cmake_message("WIP (optimized) mode")
+        vrm_cmake_add_common_compiler_flags_wip_opt()
+    #}
+    elseif("${vrm_cmake_build_type_lower}" STREQUAL "wip_profile")
+    #{
+        vrm_cmake_message("WIP (profile) mode")
+        vrm_cmake_add_common_compiler_flags_wip_profile()
+    #}
+    else()
+    #{
+        vrm_cmake_message("Unknown build mode")
     #}
     endif()
 
