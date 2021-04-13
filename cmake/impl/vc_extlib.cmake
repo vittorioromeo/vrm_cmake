@@ -39,3 +39,19 @@ macro(vrm_cmake_find_extlib extlib)
     vrm_cmake_find_extlib_in_and_default_include(${extlib} "..")
 #}
 endmacro()
+
+# Target-based version. Looks for `extlib` in `dir` and includes it.
+macro(vrm_cmake_find_extlib_in_and_default_include_for_target target extlib dir)
+#{
+    vrm_cmake_find_extlib_in(${extlib} ${dir})
+    target_include_directories(${target} PUBLIC "${${${extlib}_UPPER}_INCLUDE_DIR}")
+#}
+endmacro()
+
+# Target-based version. Looks for `extlib` in the source folder and includes it.
+macro(vrm_cmake_find_extlib_for_target target extlib)
+#{
+    vrm_cmake_message("finding ${extlib} in ./..")
+    vrm_cmake_find_extlib_in_and_default_include_for_target(${target} ${extlib} "..")
+#}
+endmacro()
