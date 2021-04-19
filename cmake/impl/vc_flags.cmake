@@ -166,8 +166,7 @@ macro(vrm_cmake_add_common_compiler_flags_release)
 
     if(NOT "${VRM_CMAKE_COMPILER_IS_MSVC}")
     #{
-        vrm_cmake_add_compiler_flag_nocheck("-Ofast")
-        vrm_cmake_add_compiler_flag_nocheck("-ffast-math")
+        vrm_cmake_add_compiler_flag_nocheck("-O3")
     #}
     else()
     #{
